@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - RoyalPalace Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --royal-gold: #FFD86B;
+            --imperial-navy: #0A122A;
+            --midnight-blue: #101A3C;
+            --pearl-white: #F7F7F7;
+            --ruby-red: #C43C3C;
+            --gold-gradient: linear-gradient(135deg, #FFD86B 0%, #FFC947 50%, #FFB800 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--imperial-navy);
+            color: var(--pearl-white);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .crown-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 48px;
+            background: rgba(10, 18, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid rgba(255, 216, 107, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 216, 107, 0.5));
+        }
+        .logo i {
+            color: var(--royal-gold);
+            font-size: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--pearl-white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--royal-gold);
+        }
+
+        .nav-links a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(16, 26, 60, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 216, 107, 0.3);
+            border-radius: 8px;
+            padding: 12px 0;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--pearl-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 216, 107, 0.1);
+            color: var(--royal-gold);
+            padding-left: 24px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--royal-gold);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            padding: 140px 48px 60px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(180deg, rgba(10, 18, 42, 0.9) 0%, rgba(16, 26, 60, 0.5) 100%);
+        }
+
+        .page-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 56px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 120px;
+            left: 48px;
+            color: var(--royal-gold);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            color: var(--pearl-white);
+            transform: translateX(-5px);
+        }
+
+        .help-section {
+            padding: 80px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-bar {
+            background: rgba(16, 26, 60, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 60px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 14px 20px;
+            background: rgba(10, 18, 42, 0.8);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 8px;
+            color: var(--pearl-white);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--royal-gold);
+            box-shadow: 0 0 15px rgba(255, 216, 107, 0.3);
+        }
+
+        .search-bar button {
+            padding: 14px 30px;
+            background: var(--gold-gradient);
+            color: var(--imperial-navy);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 216, 107, 0.5);
+        }
+
+        .support-pathways {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .pathway-card {
+            background: rgba(16, 26, 60, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--royal-gold);
+            box-shadow: 0 10px 30px rgba(255, 216, 107, 0.2);
+        }
+
+        .pathway-icon {
+            font-size: 48px;
+            color: var(--royal-gold);
+            margin-bottom: 20px;
+        }
+
+        .pathway-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--royal-gold);
+            margin-bottom: 15px;
+        }
+
+        .pathway-card p {
+            color: var(--pearl-white);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .faq-accordion {
+            margin-bottom: 60px;
+        }
+
+        .accordion-item {
+            background: rgba(16, 26, 60, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active {
+            border-color: var(--royal-gold);
+        }
+
+        .accordion-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 216, 107, 0.05);
+        }
+
+        .accordion-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: var(--royal-gold);
+        }
+
+        .accordion-header i {
+            color: var(--royal-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-content-inner {
+            padding: 0 25px 20px;
+        }
+
+        .accordion-content p {
+            color: var(--pearl-white);
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .footer {
+            background: rgba(10, 18, 42, 0.9);
+            border-top: 2px solid rgba(255, 216, 107, 0.3);
+            padding: 60px 48px 30px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--royal-gold);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--pearl-white);
+            text-decoration: none;
+            margin-bottom: 12px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--royal-gold);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 216, 107, 0.2);
+            color: var(--pearl-white);
+            opacity: 0.7;
+        }
+
+        .crown-watermark {
+            position: absolute;
+            bottom: 20px;
+            right: 48px;
+            font-size: 40px;
+            color: var(--royal-gold);
+            opacity: 0.1;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 50%;
+            color: var(--imperial-navy);
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(255, 216, 107, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 216, 107, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .page-header {
+                padding: 120px 24px 40px;
+            }
+            .page-header h1 {
+                font-size: 42px;
+            }
+            .back-to-home {
+                top: 100px;
+                left: 24px;
+            }
+            .help-section {
+                padding: 60px 24px;
+            }
+            .support-pathways {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                padding: 40px 24px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+            .logo {
+                font-size: 22px;
+            }
+            .page-header {
+                padding: 110px 16px 30px;
+            }
+            .back-to-home {
+                left: 16px;
+                top: 90px;
+            }
+            .help-section {
+                padding: 40px 16px;
+            }
+            .footer {
+                padding: 30px 16px 15px;
+            }
+        }
+
+        .footer-redirects {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 2px solid rgba(255, 216, 107, 0.3);
+        }
+
+        .footer-redirects a {
+            color: var(--pearl-white);
+            text-decoration: none;
+            margin: 0 1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .footer-redirects a:hover {
+            opacity: 1;
+            color: var(--royal-gold);
+
+
+    </style>
+</head>
+<body>
+    <div class="crown-pattern"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="RoyalPalace Casino" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-crown" style="display: none;"></i>
+                <span>RoyalPalace</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="games.html">Games <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html">Slots</a>
+                        <a href="table-games.html">Table Games</a>
+                    </div>
+                </li>
+                <li><a href="royal-club.html">Royal Club</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <a href="index.html" class="back-to-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <h1>Help Center</h1>
+    </div>
+
+    <section class="help-section">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for help articles...">
+            <button><i class="fas fa-search"></i> Search</button>
+        </div>
+
+        <div class="support-pathways">
+            <div class="pathway-card">
+                <i class="fas fa-user-circle pathway-icon"></i>
+                <h3>Account Help</h3>
+                <p>Get assistance with account creation, login issues, password reset, and profile management.</p>
+            </div>
+
+            <div class="pathway-card">
+                <i class="fas fa-credit-card pathway-icon"></i>
+                <h3>Payment Help</h3>
+                <p>Learn about deposits, withdrawals, payment methods, and transaction processing.</p>
+            </div>
+
+            <div class="pathway-card">
+                <i class="fas fa-gamepad pathway-icon"></i>
+                <h3>Game Help</h3>
+                <p>Find answers about game rules, features, bonuses, and technical game issues.</p>
+            </div>
+
+            <div class="pathway-card">
+                <i class="fas fa-crown pathway-icon"></i>
+                <h3>VIP Help</h3>
+                <p>Information about Royal Club membership, benefits, tiers, and exclusive features.</p>
+            </div>
+        </div>
+
+        <div class="faq-accordion">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 32px; color: var(--royal-gold); margin-bottom: 30px; text-align: center;">Frequently Asked Questions</h2>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>How do I create an account?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Creating an account is easy! Click on the "Sign Up" button, fill in your details including name, email, and date of birth. You must be 18 or older to create an account. Once registered, you'll receive a confirmation email to verify your account.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>How do I reset my password?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>If you've forgotten your password, click on "Forgot Password" on the login page. Enter your email address and we'll send you a password reset link. Make sure to check your spam folder if you don't see the email.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>What payment methods are accepted?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>We accept various payment methods including credit cards, debit cards, e-wallets, and bank transfers. All transactions are processed securely using industry-standard encryption. Check the Payment section in your account for available options in your region.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>How long do withdrawals take?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Withdrawal processing times vary by payment method. E-wallets typically process within 24 hours, while bank transfers may take 3-5 business days. VIP members may receive priority processing. All withdrawals are subject to verification for security purposes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>How do I join the Royal Club?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>All players automatically become members of the Royal Club when they create an account. You start at the Bronze tier and progress through Silver, Gold, Diamond, and Royal Black tiers by earning points through gameplay. The more you play, the higher your tier becomes!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>Are the games fair?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Yes! All our games use certified Random Number Generators (RNG) to ensure fair and random outcomes. Our games are regularly tested and audited by independent third-party organizations to maintain fairness and integrity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>RoyalPalace Casino</h3>
+                <p style="opacity: 0.8; margin-bottom: 15px;">Experience the ultimate royal gaming excellence. Play responsibly and enjoy premium entertainment.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="games.html">Games</a>
+                <a href="royal-club.html">Royal Club</a>
+                <a href="news.html">News</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="responsible-gaming.html">Responsible Gaming</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="help.html">Help Center</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+        </div>
+                <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Therapy Place Social Casino Games Platform.</p>
+            <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+        </div>
+        <div class="crown-watermark">👑</div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.accordion-item').forEach(accordion => {
+                    accordion.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 18, 42, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(10, 18, 42, 0.85)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(10, 18, 42, 0.98)';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderTop = '2px solid rgba(255, 216, 107, 0.3)';
+            });
+        }});    </script>
+</body>
+</html>
+

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Games - RoyalPalace Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --royal-gold: #FFD86B;
+            --imperial-navy: #0A122A;
+            --midnight-blue: #101A3C;
+            --pearl-white: #F7F7F7;
+            --ruby-red: #C43C3C;
+            --gold-gradient: linear-gradient(135deg, #FFD86B 0%, #FFC947 50%, #FFB800 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--imperial-navy);
+            color: var(--pearl-white);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .crown-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 48px;
+            background: rgba(10, 18, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 2px solid rgba(255, 216, 107, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 216, 107, 0.5));
+        }
+
+        .logo i {
+            color: var(--royal-gold);
+            font-size: 32px;
+        }
+
+        .footer-redirects {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 2px solid rgba(255, 216, 107, 0.3);
+        }
+
+        .footer-redirects a {
+            color: var(--pearl-white);
+            text-decoration: none;
+            margin: 0 1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .footer-redirects a:hover {
+            opacity: 1;
+            color: var(--royal-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--pearl-white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--royal-gold);
+        }
+
+        .nav-links a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(16, 26, 60, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 216, 107, 0.3);
+            border-radius: 8px;
+            padding: 12px 0;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--pearl-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 216, 107, 0.1);
+            color: var(--royal-gold);
+            padding-left: 24px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--royal-gold);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            padding: 140px 48px 60px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(180deg, rgba(10, 18, 42, 0.9) 0%, rgba(16, 26, 60, 0.5) 100%);
+        }
+
+        .page-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 56px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 120px;
+            left: 48px;
+            color: var(--royal-gold);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            color: var(--pearl-white);
+            transform: translateX(-5px);
+        }
+
+        .games-section {
+            padding: 80px 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .game-card {
+            background: rgba(16, 26, 60, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 216, 107, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--royal-gold);
+            box-shadow: 0 10px 40px rgba(255, 216, 107, 0.3);
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-icon {
+            font-size: 80px;
+            color: var(--royal-gold);
+            margin-bottom: 25px;
+        }
+
+        .roulette-icon {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .game-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: var(--royal-gold);
+            margin-bottom: 15px;
+        }
+
+        .game-card p {
+            color: var(--pearl-white);
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .game-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .game-features li {
+            color: var(--pearl-white);
+            opacity: 0.9;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .game-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--royal-gold);
+            font-weight: bold;
+        }
+
+        .game-btn {
+            padding: 14px 35px;
+            background: var(--gold-gradient);
+            color: var(--imperial-navy);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 216, 107, 0.5);
+        }
+
+        .footer {
+            background: rgba(10, 18, 42, 0.9);
+            border-top: 2px solid rgba(255, 216, 107, 0.3);
+            padding: 60px 48px 30px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--royal-gold);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--pearl-white);
+            text-decoration: none;
+            margin-bottom: 12px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--royal-gold);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 216, 107, 0.2);
+            color: var(--pearl-white);
+            opacity: 0.7;
+        }
+
+        .crown-watermark {
+            position: absolute;
+            bottom: 20px;
+            right: 48px;
+            font-size: 40px;
+            color: var(--royal-gold);
+            opacity: 0.1;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 50%;
+            color: var(--imperial-navy);
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(255, 216, 107, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 216, 107, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .page-header {
+                padding: 120px 24px 40px;
+            }
+            .page-header h1 {
+                font-size: 42px;
+            }
+            .back-to-home {
+                top: 100px;
+                left: 24px;
+            }
+            .games-section {
+                padding: 60px 24px;
+            }
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                padding: 40px 24px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 32px;
+            }
+            .section-header h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+            .logo {
+                font-size: 22px;
+            }
+            .page-header {
+                padding: 110px 16px 30px;
+            }
+            .back-to-home {
+                left: 16px;
+                top: 90px;
+            }
+            .games-section {
+                padding: 40px 16px;
+            }
+            .footer {
+                padding: 30px 16px 15px;
+            }
+
+
+    </style>
+</head>
+<body>
+    <div class="crown-pattern"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="RoyalPalace Casino" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-crown" style="display: none;"></i>
+                <span>RoyalPalace</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="games.html">Games <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html">Slots</a>
+                        <a href="table-games.html">Table Games</a>
+                    </div>
+                </li>
+                <li><a href="royal-club.html">Royal Club</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <a href="index.html" class="back-to-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <h1>Royal Table Games</h1>
+        <p>Experience the elegance of classic casino table games with royal sophistication</p>
+    </div>
+
+    <section class="games-section">
+        <div class="section-header">
+            <h2>Premium Table Games</h2>
+            <p>Choose from our collection of classic and modern table games</p>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <i class="fas fa-spinner roulette-icon game-icon"></i>
+                <h3>Royal Roulette</h3>
+                <p>Spin the wheel of fortune in our elegant European and American roulette tables. Experience the thrill of the royal casino with live dealers and premium graphics.</p>
+                <ul class="game-features">
+                    <li>European & American variants</li>
+                    <li>Live dealer options</li>
+                    <li>Multiple betting strategies</li>
+                    <li>HD quality streaming</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+
+            <div class="game-card">
+                <i class="fas fa-chess game-icon"></i>
+                <h3>Royal Blackjack</h3>
+                <p>Test your strategy and skill against the dealer in our premium blackjack tables. Multiple variants and betting limits available for all players.</p>
+                <ul class="game-features">
+                    <li>Classic & modern variants</li>
+                    <li>Perfect strategy guides</li>
+                    <li>Side bets available</li>
+                    <li>Tournament mode</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+
+            <div class="game-card">
+                <i class="fas fa-poker-chips game-icon"></i>
+                <h3>Royal Baccarat</h3>
+                <p>Experience the sophistication of baccarat, the game of choice for royalty. Simple rules, elegant gameplay, and exciting betting options.</p>
+                <ul class="game-features">
+                    <li>Punto Banco variant</li>
+                    <li>Live dealer tables</li>
+                    <li>Side bet options</li>
+                    <li>VIP tables available</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+
+            <div class="game-card">
+                <i class="fas fa-dice game-icon"></i>
+                <h3>Royal Poker</h3>
+                <p>Join exclusive poker tournaments and cash games. Compete against players from around the world in Texas Hold'em, Omaha, and more.</p>
+                <ul class="game-features">
+                    <li>Multiple poker variants</li>
+                    <li>Daily tournaments</li>
+                    <li>Progressive jackpots</li>
+                    <li>Leaderboard rankings</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+
+            <div class="game-card">
+                <i class="fas fa-dice-five game-icon"></i>
+                <h3>Royal Craps</h3>
+                <p>Roll the dice in our exciting craps tables. Experience the energy and excitement of this classic casino game with modern features.</p>
+                <ul class="game-features">
+                    <li>Multiple betting options</li>
+                    <li>Live dealer experience</li>
+                    <li>Strategy guides</li>
+                    <li>Practice mode available</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+
+            <div class="game-card">
+                <i class="fas fa-cards game-icon"></i>
+                <h3>Royal Pai Gow</h3>
+                <p>Discover this ancient Chinese game with royal elegance. Create two winning hands and beat the dealer in this strategic card game.</p>
+                <ul class="game-features">
+                    <li>Traditional gameplay</li>
+                    <li>Easy to learn</li>
+                    <li>Low house edge</li>
+                    <li>Side bet options</li>
+                </ul>
+                <a href="#" class="game-btn">Play Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>RoyalPalace Casino</h3>
+                <p style="opacity: 0.8; margin-bottom: 15px;">Experience the ultimate royal gaming excellence. Play responsibly and enjoy premium entertainment.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="games.html">Games</a>
+                <a href="royal-club.html">Royal Club</a>
+                <a href="news.html">News</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="responsible-gaming.html">Responsible Gaming</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="help.html">Help Center</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Therapy Place Social Casino Games Platform.</p>
+            <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+        </div>
+        <div class="crown-watermark">👑</div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 18, 42, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(10, 18, 42, 0.85)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(10, 18, 42, 0.98)';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderTop = '2px solid rgba(255, 216, 107, 0.3)';
+            });
+        }});    </script>
+</body>
+</html>
+

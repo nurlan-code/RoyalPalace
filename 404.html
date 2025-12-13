@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found - RoyalPalace Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --royal-gold: #FFD86B;
+            --imperial-navy: #0A122A;
+            --midnight-blue: #101A3C;
+            --pearl-white: #F7F7F7;
+            --ruby-red: #C43C3C;
+            --gold-gradient: linear-gradient(135deg, #FFD86B 0%, #FFC947 50%, #FFB800 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--imperial-navy);
+            color: var(--pearl-white);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crown-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--royal-gold) 35px, var(--royal-gold) 36px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 60px 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .error-icon {
+            font-size: 150px;
+            color: var(--royal-gold);
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 216, 107, 0.6));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .error-code {
+            font-family: 'Cinzel', serif;
+            font-size: 120px;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            color: var(--royal-gold);
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            font-size: 20px;
+            color: var(--pearl-white);
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: var(--imperial-navy);
+            box-shadow: 0 4px 20px rgba(255, 216, 107, 0.4);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 216, 107, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--royal-gold);
+            border: 2px solid var(--royal-gold);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 216, 107, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .quick-links {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(255, 216, 107, 0.3);
+        }
+
+        .quick-links h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: var(--royal-gold);
+            margin-bottom: 30px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .link-card {
+            background: rgba(16, 26, 60, 0.6);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 216, 107, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--pearl-white);
+            display: block;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--royal-gold);
+            box-shadow: 0 10px 30px rgba(255, 216, 107, 0.2);
+        }
+
+        .link-card i {
+            font-size: 32px;
+            color: var(--royal-gold);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .link-card span {
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 40px 24px;
+            }
+            .error-code {
+                font-size: 80px;
+            }
+            .error-title {
+                font-size: 36px;
+            }
+            .error-icon {
+                font-size: 100px;
+            }
+            .error-message {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .error-code {
+                font-size: 60px;
+            }
+            .error-title {
+                font-size: 28px;
+            }
+            .error-icon {
+                font-size: 80px;
+            }
+            .btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-container {
+                padding: 30px 16px;
+            }
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="crown-pattern"></div>
+
+    <div class="error-container">
+        <div class="error-icon">👑</div>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">The royal page you're looking for has been lost in the palace corridors. It seems this page doesn't exist or has been moved to another location.</p>
+        
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-gold">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="games.html" class="btn btn-outline">
+                <i class="fas fa-gamepad"></i> Play Games
+            </a>
+        </div>
+
+        <div class="quick-links">
+            <h3>Quick Links</h3>
+            <div class="links-grid">
+                <a href="index.html" class="link-card">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="games.html" class="link-card">
+                    <i class="fas fa-dice"></i>
+                    <span>Games</span>
+                </a>
+                <a href="slots.html" class="link-card">
+                    <i class="fas fa-spinner"></i>
+                    <span>Slots</span>
+                </a>
+                <a href="royal-club.html" class="link-card">
+                    <i class="fas fa-crown"></i>
+                    <span>Royal Club</span>
+                </a>
+                <a href="contact.html" class="link-card">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+                <a href="help.html" class="link-card">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto redirect after 10 seconds (optional)
+        // setTimeout(() => {
+        //     window.location.href = 'index.html';
+        // }, 10000);
+    </script>
+</body>
+</html>
+
